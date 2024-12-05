@@ -49,10 +49,10 @@
         case 'ajout':
             $nomPdt = $_POST["designation"];
             $prix = $_POST["prix"];
-            $img = $_POST["img"];
+            //$img = $_POST["img"];
             $description = $_POST["description"];
 
-            $req = "INSERT INTO produits (designation, prix, img, description, statut) 
+            $req = "INSERT INTO products (designation, prix, img, description, statut) 
                         VALUES (:designation, :prix, :img, :description, 1)";
             $stmt = $pdo->prepare($req);
             $stmt->bindValue(':designation', $nomPdt, PDO::PARAM_STR);
