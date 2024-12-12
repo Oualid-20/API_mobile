@@ -67,6 +67,49 @@
             ];
             echo json_encode($json);
             break;
+         case 'modifie':
+            $id = $_POST["id"];
+            $nomPdt = $_POST["designation"];
+            $prix = $_POST["prix"];
+           // $img = $_POST["img"];
+            $description = $_POST["description"];
+
+            if (!isset($id) || empty($nomPdt) || empty($prix) || empty($description)) {
+                $json = [
+                    'action' => 'modifier',
+                    'statut' => 'error',
+                    'message' => 'Tous les champs sont nécessaires'
+                ];
+                //echo json_encode($json);
+                exit;
+            }
+
+            $req = "UPDATE products 
+                    SET designation = :designation, prix = :prix, img = :img, description = :description 
+                    WHERE id = :id AND statut > 0";
+            $stmt = $pdo->prepare($req);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->bindValue(':designation', $nomPdt, PDO::PARAM_STR);
+            $stmt->bindValue(':prix', $prix, PDO::PARAM_STR);
+            //$stmt->bindValue(':img', $img, PDO::PARAM_STR);
+            $stmt->bindValue(':description', $description, PDO::PARAM_STR);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                $json = [
+                    'action' => 'modifier',
+                    'statut' => 'ok',
+                    'message' => 'Modifié avec succès',
+                ];
+            } else {
+                $json = [
+                    'action' => 'modifier',
+                    'statut' => 'error',
+                    'message' => 'Aucune modification effectuée ou produit non trouvé'
+                ];
+            }
+            echo json_encode($json);
+            break;
         default:
             $req = "SELECT *
                         FROM products
