@@ -105,7 +105,7 @@
                 $json = [
                     'action' => 'modifier',
                     'statut' => 'error',
-                    'message' => 'Aucune modification effectuée ou produit non trouvé'
+                    'message' => 'Erreur dans la modification'
                 ];
             }
             echo json_encode($json);
