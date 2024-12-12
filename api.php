@@ -78,7 +78,6 @@
             $tab = $stmt->fetchAll(PDO::FETCH_OBJ);
 
             // print_r($tab);
-           
             echo json_encode($tab);
             break;
         default:
@@ -88,6 +87,5 @@
 
             $stmt = $pdo->query($req);
             $tab = $stmt->fetchAll(PDO::FETCH_OBJ);
-
             // print_r($tab);
     }
