@@ -24,7 +24,6 @@
             $tab = $stmt->fetchAll(PDO::FETCH_OBJ);
 
             // print_r($tab);
-           
             echo json_encode($tab);
             exit;
     }
@@ -67,18 +66,6 @@
                 'id' => $pdo->lastInsertId()
             ];
             echo json_encode($json);
-            break;
-
-        case 'affiche':
-            $req = "SELECT *
-                        FROM products
-                        WHERE statut > 0";
-
-            $stmt = $pdo->query($req);
-            $tab = $stmt->fetchAll(PDO::FETCH_OBJ);
-
-            // print_r($tab);
-            echo json_encode($tab);
             break;
         default:
             $req = "SELECT *
