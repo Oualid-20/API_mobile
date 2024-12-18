@@ -28,6 +28,22 @@
             exit;
     }
     switch ($_GET["action"]) {
+
+        case 'login':
+            $email = $_POST["email"];
+            $mdp = $_POST["mdp"];
+
+            $req = "SELECT COUNT(*) AS NB
+                    FROM  utilisateurs 
+                    WHERE email = :email AND mdp = :mdp";
+            $stmt = $pdo->prepare($req);
+            $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+            $stmt->bindValue(':mdp', $mdp, PDO::PARAM_STR);
+            $stmt->execute();
+            $tab = $stmt->fetchAll(PDO::FETCH_OBJ);
+            
+            break;
+
         case 'delete':
             $Id = $_GET["id"];
 
