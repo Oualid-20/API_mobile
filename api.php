@@ -40,8 +40,22 @@
             $stmt->bindValue(':email', $email, PDO::PARAM_STR);
             $stmt->bindValue(':mdp', $mdp, PDO::PARAM_STR);
             $stmt->execute();
-            $tab = $stmt->fetchAll(PDO::FETCH_OBJ);
-            
+            $tab = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($tab['NB'] > 0) {
+                $json = [
+                    'action' => 'login',
+                    'statut' => 'ok',
+                    'NB' => $tab['NB']
+                ];
+            } else {
+                $json = [
+                    'action' => 'login',
+                    'statut' => 'error',
+                    'NB' => 0 
+                ];
+            }
+            echo json_encode($json);
             break;
 
         case 'delete':
@@ -72,7 +86,7 @@
             $stmt = $pdo->prepare($req);
             $stmt->bindValue(':designation', $nomPdt, PDO::PARAM_STR);
             $stmt->bindValue(':prix', $prix, PDO::PARAM_STR);
-            $stmt->bindValue(':img', $img, PDO::PARAM_STR);
+            $stmt->bindValue(':img',null);
             $stmt->bindValue(':description', $description, PDO::PARAM_STR);
             $stmt->execute();
             $json = [
@@ -82,7 +96,7 @@
                 'id' => $pdo->lastInsertId()
             ];
             echo json_encode($json);
-            break;
+            break;  
          case 'modifie':
             $id = $_POST["id"];
             $nomPdt = $_POST["designation"];
@@ -107,7 +121,7 @@
             $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             $stmt->bindValue(':designation', $nomPdt, PDO::PARAM_STR);
             $stmt->bindValue(':prix', $prix, PDO::PARAM_STR);
-            //$stmt->bindValue(':img', $img, PDO::PARAM_STR);
+            $stmt->bindValue(':img', null);
             $stmt->bindValue(':description', $description, PDO::PARAM_STR);
             $stmt->execute();
 
