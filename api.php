@@ -6,9 +6,7 @@
     $username = 'root';
     $password = '';
 
-    //Mettez à jour ce qui précède avec vos identifiants de base de données.
-
-    try {
+try {
         $pdo = new PDO($dsn, $username, $password);
     } catch (PDOException $e) {
         echo 'Connexion échouée : ' . $e->getMessage();
@@ -22,7 +20,6 @@
 
             $stmt = $pdo->query($req);
             $tab = $stmt->fetchAll(PDO::FETCH_OBJ);
-
             // print_r($tab);
             echo json_encode($tab);
             exit;
